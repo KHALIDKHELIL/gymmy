@@ -43,6 +43,13 @@ GYMMY/
     │   └── exercises.json    # Exercise database (Dumbbell, Barbell, Bodyweight)
     ├── server.js             # Express API server
     └── package.json
+```
+
+
+
+
+
+
 
 
 
