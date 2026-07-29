@@ -6,10 +6,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pool'); // 'pool' | 'session'
   
-  // NEW: Search & Filter States
+  // Search & Filter States
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMuscle, setSelectedMuscle] = useState('All');
   
+  // NEW: Workout Timer States
+  const [durationMinutes, setDurationMinutes] = useState(30);
+  const [timeLeft, setTimeLeft] = useState(null); // stored in seconds
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+
   const { session, addToSession, removeFromSession } = useStore();
 
   useEffect(() => {
@@ -20,6 +25,44 @@ function App() {
         setLoading(false);
       });
   }, []);
+
+  // NEW: Timer Countdown & Auto-Destroy Logic
+  useEffect(() => {
+    let interval = null;
+    if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0 && isTimerRunning) {
+      // Time is up -> Auto-Destroy Session
+      setIsTimerRunning(false);
+      setTimeLeft(null);
+      session.forEach((ex) => removeFromSession(ex.id));
+      alert("⏰ Time's up! Great workout—your session has self-destructed.");
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning, timeLeft, session, removeFromSession]);
+
+  // Helper to start timer
+  const startTimer = () => {
+    if (durationMinutes > 0) {
+      setTimeLeft(durationMinutes * 60);
+      setIsTimerRunning(true);
+    }
+  };
+
+  // Helper to stop/reset timer
+  const stopTimer = () => {
+    setIsTimerRunning(false);
+    setTimeLeft(null);
+  };
+
+  // Helper to format seconds into MM:SS
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
 
   // Helper to check if exercise is already added
   const isAdded = (id) => session.some((ex) => ex.id === id);
@@ -52,9 +95,19 @@ function App() {
       {/* STICKY MOBILE HEADER & TABS */}
       <header className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 px-4 py-3">
         <div className="max-w-md mx-auto flex items-center justify-between mb-3">
-          <h1 className="text-2xl font-black tracking-tight text-white">
-            GYM<span className="text-blue-500">FLOW</span>
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="text-2xl font-black tracking-tight text-white">
+              GYM<span className="text-blue-500">FLOW</span>
+            </h1>
+            
+            {/* LIVE TIMER BADGE IN HEADER */}
+            {isTimerRunning && timeLeft !== null && (
+              <span className="bg-red-950 border border-red-500/50 text-red-400 text-xs font-mono font-bold px-2 py-0.5 rounded-full animate-pulse">
+                ⏱ {formatTime(timeLeft)}
+              </span>
+            )}
+          </div>
+
           <span className="text-xs font-semibold px-2.5 py-1 bg-gray-800 text-gray-300 rounded-full border border-gray-700">
             {session.length} {session.length === 1 ? 'Exercise' : 'Exercises'}
           </span>
@@ -144,7 +197,7 @@ function App() {
                           key={ex.id} 
                           className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 shadow-sm flex flex-col"
                         >
-                          {/* GIF / IMAGE - FIXED: object-contain shows 100% of the GIF */}
+                          {/* GIF / IMAGE - object-contain shows 100% of the GIF */}
                           <div className="h-52 bg-gray-950 relative flex items-center justify-center border-b border-gray-800/60">
                             <img 
                               src={ex.mediaUrl || `https://placehold.co/400x200/1f2937/a3a3a3?text=${ex.name.split(' ').join('+')}`} 
@@ -193,6 +246,61 @@ function App() {
         {/* TAB 2: ACTIVE SESSION */}
         {activeTab === 'session' && (
           <div className="space-y-4">
+            
+            {/* WORKOUT TIMER CARD */}
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                  Session Timer
+                </span>
+                <span className="text-xs text-gray-500 font-medium">
+                  Auto-destructs at 00:00
+                </span>
+              </div>
+
+              {!isTimerRunning ? (
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 flex items-center bg-gray-950 border border-gray-800 rounded-xl px-3 py-2">
+                    <input
+                      type="number"
+                      min="1"
+                      max="180"
+                      value={durationMinutes}
+                      onChange={(e) => setDurationMinutes(Number(e.target.value))}
+                      className="w-full bg-transparent text-white font-bold text-sm focus:outline-none"
+                    />
+                    <span className="text-xs font-semibold text-gray-500">MINS</span>
+                  </div>
+                  <button
+                    onClick={startTimer}
+                    disabled={session.length === 0}
+                    className={`px-4 py-2 rounded-xl font-bold text-sm transition-all ${
+                      session.length === 0
+                        ? 'bg-gray-800 text-gray-600 cursor-not-allowed'
+                        : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20'
+                    }`}
+                  >
+                    Start Workout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between bg-gray-950 border border-red-500/30 rounded-xl p-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
+                    <span className="text-2xl font-mono font-black text-white">
+                      {formatTime(timeLeft)}
+                    </span>
+                  </div>
+                  <button
+                    onClick={stopTimer}
+                    className="text-xs font-bold text-red-400 hover:text-red-300 bg-red-950/50 border border-red-800/50 px-3 py-1.5 rounded-lg"
+                  >
+                    Stop / Reset
+                  </button>
+                </div>
+              )}
+            </div>
+
             <div className="flex items-center justify-between py-1">
               <div>
                 <h2 className="text-lg font-bold text-white">
