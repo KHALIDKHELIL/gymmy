@@ -6,7 +6,7 @@
     "secondaryMuscles": ["Triceps", "Shoulders"], 
     "equipment": "Bodyweight", 
     "instructions": ["Keep body straight", "Lower chest to floor", "Push back to starting position"],
-    "mediaUrl": "/gifs/push-ups.gif" 
+    "mediaUrl": "/gifs/pushup.gif" 
   },
   { 
     "id": "2", 
@@ -24,7 +24,7 @@
     "secondaryMuscles": ["Triceps", "Shoulders"], 
     "equipment": "Dumbbell", 
     "instructions": ["Lie flat on bench", "Press dumbbells straight up over chest", "Lower with control"],
-    "mediaUrl": "/gifs/flat-dumbbell-press.gif" 
+    "mediaUrl": "/gifs/Dumbbell-Press.gif" 
   },
   { 
     "id": "4", 
@@ -33,7 +33,7 @@
     "secondaryMuscles": ["Shoulders", "Triceps"], 
     "equipment": "Dumbbell", 
     "instructions": ["Set bench to 30 degrees", "Press weights over upper chest"],
-    "mediaUrl": "/gifs/incline-dumbbell-press.gif" 
+    "mediaUrl": "/gifs/Incline-Dumbbell-Press.gif" 
   },
   { 
     "id": "5", 
@@ -158,7 +158,7 @@
     "secondaryMuscles": [], 
     "equipment": "Barbell", 
     "instructions": ["Lie flat on bench", "Lower bar towards forehead", "Extend arms back up"],
-    "mediaUrl": "/gifs/skullcrushers.gif" 
+    "mediaUrl": "/gifs/skull-crusher.gif" 
   },
   { 
     "id": "18", 
@@ -167,7 +167,7 @@
     "secondaryMuscles": [], 
     "equipment": "Dumbbell", 
     "instructions": ["Hold one dumbbell with both hands", "Lower behind head", "Press straight up"],
-    "mediaUrl": "/gifs/overhead-dumbbell-extension.gif" 
+    "mediaUrl": "/gifs/Standing-Overhead-Dumbbell-Tricep-Extension.gif" 
   },
   { 
     "id": "19", 
@@ -176,7 +176,7 @@
     "secondaryMuscles": [], 
     "equipment": "Dumbbell", 
     "instructions": ["Hinge forward", "Keep upper arm parallel to floor", "Extend forearm backwards"],
-    "mediaUrl": "/gifs/dumbbell-kickbacks.gif" 
+    "mediaUrl": "/gifs/dumbbell-kickback.gif" 
   },
 
 
@@ -205,7 +205,7 @@
     "secondaryMuscles": ["Glutes", "Lower Back"], 
     "equipment": "Barbell", 
     "instructions": ["Slight bend in knees", "Hinge hips backward", "Keep back flat and bar close to legs"],
-    "mediaUrl": "/gifs/romanian-deadlift.gif" 
+    "mediaUrl": "/gifs/RomanianDeadlift.gif" 
   },
   { 
     "id": "23", 
@@ -223,7 +223,7 @@
     "secondaryMuscles": ["Glutes"], 
     "equipment": "Dumbbell", 
     "instructions": ["Hold dumbbells at sides", "Step forward and lower hips", "Push back to start"],
-    "mediaUrl": "/gifs/dumbbell-lunges.gif" 
+    "mediaUrl": "/gifs/dumbbell-lunge.gif" 
   },
   { 
     "id": "25", 
@@ -232,7 +232,7 @@
     "secondaryMuscles": [], 
     "equipment": "Dumbbell", 
     "instructions": ["Hold dumbbells at sides", "Rise up onto toes", "Squeeze calves at the top"],
-    "mediaUrl": "/gifs/standing-calf-raises.gif" 
+    "mediaUrl": "/gifs/standing-calf-raise.gif" 
   },
 
 
@@ -252,7 +252,7 @@
     "secondaryMuscles": ["Hip Flexors"], 
     "equipment": "Bodyweight", 
     "instructions": ["Hang from a pull-up bar", "Keep legs straight", "Raise legs to 90 degrees"],
-    "mediaUrl": "/gifs/hanging-leg-raise.gif" 
+    "mediaUrl": "/gifs/hanging-leg.gif" 
   },
   { 
     "id": "28", 
@@ -261,7 +261,7 @@
     "secondaryMuscles": ["Obliques"], 
     "equipment": "Dumbbell", 
     "instructions": ["Sit on floor, lean back slightly", "Hold dumbbell with both hands", "Rotate torso side to side"],
-    "mediaUrl": "/gifs/russian-twists.gif" 
+    "mediaUrl": "/gifs/russian-twist.gif" 
   }
 
   ,
@@ -272,7 +272,7 @@
       "secondaryMuscles": ["Triceps", "Shoulders"], 
       "equipment": "Barbell", 
       "instructions": ["Lie flat on bench", "Lower bar to mid-chest", "Press back up powerfully"],
-      "mediaUrl": "/gifs/barbell-bench-press.gif" 
+      "mediaUrl": "/gifs/Close-Grip-Bench-Press.gif" 
     },
     { 
       "id": "30", 
@@ -290,7 +290,7 @@
       "secondaryMuscles": ["Core", "Glutes"], 
       "equipment": "Barbell", 
       "instructions": ["Rest bar on front of shoulders", "Keep elbows high", "Squat down while keeping torso upright"],
-      "mediaUrl": "/gifs/barbell-front-squat.gif" 
+      "mediaUrl": "/gifs/Barbell-squat.gif" 
     },
     { 
       "id": "32", 
@@ -299,7 +299,7 @@
       "secondaryMuscles": ["Hamstrings", "Core"], 
       "equipment": "Barbell", 
       "instructions": ["Rest upper back on bench", "Place padded barbell across hips", "Thrust hips upward and squeeze glutes"],
-      "mediaUrl": "/gifs/barbell-hip-thrust.gif" 
+      "mediaUrl": "/gifs/Hip-Thrust.gif" 
     },
     { 
       "id": "33", 
@@ -317,7 +317,7 @@
       "secondaryMuscles": ["Chest", "Shoulders"], 
       "equipment": "Barbell", 
       "instructions": ["Grip bar shoulder-width apart", "Keep elbows tucked to sides", "Lower to lower chest and press up"],
-      "mediaUrl": "/gifs/close-grip-bench-press.gif" 
+      "mediaUrl": "/gifs/Close-Grip-Bench-Press.gif" 
     },
     { 
       "id": "35", 
@@ -326,7 +326,7 @@
       "secondaryMuscles": ["Lower Back", "Glutes"], 
       "equipment": "Barbell", 
       "instructions": ["Rest bar on upper back", "Hinge at hips keeping back completely flat", "Return to standing position"],
-      "mediaUrl": "/gifs/barbell-good-mornings.gif" 
+      "mediaUrl": "/gifs/barbell-good-morning.gif" 
     },
     { 
       "id": "36", 
@@ -353,7 +353,7 @@
       "secondaryMuscles": ["Glutes", "Core"], 
       "equipment": "Barbell", 
       "instructions": ["Rest bar securely on upper back", "Step forward into a deep lunge", "Push off front foot back to starting position"],
-      "mediaUrl": "/gifs/barbell-lunges.gif" 
+      "mediaUrl": "/gifs/barbell-lunge.gif" 
     }
   
 ]
