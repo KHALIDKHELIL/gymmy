@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useStore } from './store';
+// 1. IMPORT YOUR JSON DATA DIRECTLY
 import exercisesData from './data/exercises.json';
 
 function App() {
+  // 2. USE THE IMPORTED DATA IMMEDIATELY (No loading state needed!)
   const [exercises, setExercises] = useState(exercisesData);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('pool'); // 'pool' | 'session'
@@ -11,23 +13,14 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedMuscle, setSelectedMuscle] = useState('All');
   
-  // NEW: Workout Timer States
+  // Workout Timer States
   const [durationMinutes, setDurationMinutes] = useState(30);
   const [timeLeft, setTimeLeft] = useState(null); // stored in seconds
   const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   const { session, addToSession, removeFromSession } = useStore();
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/exercises')
-      .then((res) => res.json())
-      .then((data) => {
-        setExercises(data);
-        setLoading(false);
-      });
-  }, []);
-
-  // NEW: Timer Countdown & Auto-Destroy Logic
+  // Timer Countdown & Auto-Destroy Logic
   useEffect(() => {
     let interval = null;
     if (isTimerRunning && timeLeft !== null && timeLeft > 0) {
@@ -35,7 +28,6 @@ function App() {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
     } else if (timeLeft === 0 && isTimerRunning) {
-      // Time is up -> Auto-Destroy Session
       setIsTimerRunning(false);
       setTimeLeft(null);
       session.forEach((ex) => removeFromSession(ex.id));
@@ -44,7 +36,6 @@ function App() {
     return () => clearInterval(interval);
   }, [isTimerRunning, timeLeft, session, removeFromSession]);
 
-  // Helper to start timer
   const startTimer = () => {
     if (durationMinutes > 0) {
       setTimeLeft(durationMinutes * 60);
@@ -52,29 +43,24 @@ function App() {
     }
   };
 
-  // Helper to stop/reset timer
   const stopTimer = () => {
     setIsTimerRunning(false);
     setTimeLeft(null);
   };
 
-  // Helper to format seconds into MM:SS
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
-  // Helper to check if exercise is already added
   const isAdded = (id) => session.some((ex) => ex.id === id);
 
-  // Extract unique muscle groups for the filter bar
   const muscleGroups = useMemo(() => {
     const groups = new Set(exercises.map((ex) => ex.primaryMuscle));
     return ['All', ...Array.from(groups)];
   }, [exercises]);
 
-  // Filtered exercises based on search and selected muscle
   const filteredExercises = useMemo(() => {
     return exercises.filter((ex) => {
       const matchesMuscle = selectedMuscle === 'All' || ex.primaryMuscle === selectedMuscle;
@@ -85,7 +71,6 @@ function App() {
     });
   }, [exercises, selectedMuscle, searchQuery]);
 
-  // Helper to clear entire session
   const clearSession = () => {
     session.forEach((ex) => removeFromSession(ex.id));
   };
@@ -101,7 +86,6 @@ function App() {
               GYM<span className="text-blue-500">FLOW</span>
             </h1>
             
-            {/* LIVE TIMER BADGE IN HEADER */}
             {isTimerRunning && timeLeft !== null && (
               <span className="bg-red-950 border border-red-500/50 text-red-400 text-xs font-mono font-bold px-2 py-0.5 rounded-full animate-pulse">
                 ⏱ {formatTime(timeLeft)}
@@ -198,7 +182,6 @@ function App() {
                           key={ex.id} 
                           className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 shadow-sm flex flex-col"
                         >
-                          {/* GIF / IMAGE - object-contain shows 100% of the GIF */}
                           <div className="h-52 bg-gray-950 relative flex items-center justify-center border-b border-gray-800/60">
                             <img 
                               src={ex.mediaUrl || `https://placehold.co/400x200/1f2937/a3a3a3?text=${ex.name.split(' ').join('+')}`} 
@@ -210,7 +193,6 @@ function App() {
                             </span>
                           </div>
 
-                          {/* CONTENT */}
                           <div className="p-4 flex flex-col gap-3">
                             <div>
                               <h2 className="text-lg font-bold text-white leading-snug">
@@ -221,7 +203,6 @@ function App() {
                               </p>
                             </div>
 
-                            {/* ACTION BUTTON */}
                             <button 
                               onClick={() => addToSession(ex)}
                               disabled={added}
