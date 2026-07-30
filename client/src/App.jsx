@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useStore } from './store';
+import exercisesData from './data/exercises.json';
 
 function App() {
-  const [exercises, setExercises] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [exercises, setExercises] = useState(exercisesData);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('pool'); // 'pool' | 'session'
   
   // Search & Filter States
