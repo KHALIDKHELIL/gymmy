@@ -80,7 +80,7 @@
     "secondaryMuscles": ["Chest", "Triceps"], 
     "equipment": "Dumbbell", 
     "instructions": ["Lie perpendicular on bench", "Lower single dumbbell behind head", "Pull back over chest"],
-    "mediaUrl": "/gifs/dumbbell-pullover.gif" 
+    "mediaUrl": "/gifs/Dumbbell-Pullover.gif" 
   },
 
 
@@ -91,7 +91,7 @@
     "secondaryMuscles": ["Triceps", "Core"], 
     "equipment": "Barbell", 
     "instructions": ["Press bar straight up from clavicle", "Keep core tight", "Lock out elbows at top"],
-    "mediaUrl": "/gifs/overhead-press.gif" 
+    "mediaUrl": "/gifs/Overhead-Press.gif" 
   },
   { 
     "id": "11", 
@@ -100,7 +100,7 @@
     "secondaryMuscles": ["Triceps"], 
     "equipment": "Dumbbell", 
     "instructions": ["Sit on bench with back support", "Press dumbbells overhead", "Lower to ear level"],
-    "mediaUrl": "/gifs/dumbbell-shoulder-press.gif" 
+    "mediaUrl": "/gifs/Dumbbell-Shoulder-Press.gif" 
   },
   { 
     "id": "12", 
@@ -109,16 +109,7 @@
     "secondaryMuscles": [], 
     "equipment": "Dumbbell", 
     "instructions": ["Stand tall", "Raise dumbbells out to sides", "Stop at shoulder height"],
-    "mediaUrl": "/gifs/lateral-raises.gif" 
-  },
-  { 
-    "id": "13", 
-    "name": "Reverse Pec Deck / Rear Delt Fly", 
-    "primaryMuscle": "Shoulders", 
-    "secondaryMuscles": ["Back"], 
-    "equipment": "Dumbbell", 
-    "instructions": ["Hinge at hips", "Raise weights out to the side", "Squeeze rear delts"],
-    "mediaUrl": "/gifs/rear-delt-fly.gif" 
+    "mediaUrl": "/gifs/Lateral-Raise.gif" 
   },
 
 
@@ -129,7 +120,7 @@
     "secondaryMuscles": ["Forearms"], 
     "equipment": "Barbell", 
     "instructions": ["Keep elbows pinned to sides", "Curl bar up to chest", "Lower slowly"],
-    "mediaUrl": "/gifs/barbell-bicep-curl.gif" 
+    "mediaUrl": "/gifs/Barbell-Curl.gif" 
   },
   { 
     "id": "15", 
@@ -138,7 +129,7 @@
     "secondaryMuscles": ["Forearms"], 
     "equipment": "Dumbbell", 
     "instructions": ["Curl one dumbbell at a time", "Supinate (twist) wrist at the top"],
-    "mediaUrl": "/gifs/alternating-dumbbell-curls.gif" 
+    "mediaUrl": "/gifs/dumbbell-alternating-curl.gif" 
   },
   { 
     "id": "16", 
@@ -147,7 +138,7 @@
     "secondaryMuscles": ["Brachialis", "Forearms"], 
     "equipment": "Dumbbell", 
     "instructions": ["Keep palms facing each other", "Curl weights up", "Squeeze at the top"],
-    "mediaUrl": "/gifs/hammer-curls.gif" 
+    "mediaUrl": "/gifs/Hammer-Curl.gif" 
   },
 
 
@@ -214,7 +205,7 @@
     "secondaryMuscles": ["Glutes"], 
     "equipment": "Dumbbell", 
     "instructions": ["Elevate rear foot on bench", "Hold dumbbells at sides", "Drop back knee towards floor"],
-    "mediaUrl": "/gifs/bulgarian-split-squat.gif" 
+    "mediaUrl": "/gifs/bulgarian-split.gif" 
   },
   { 
     "id": "24", 
@@ -308,7 +299,7 @@
       "secondaryMuscles": ["Shoulders", "Traps"], 
       "equipment": "Barbell", 
       "instructions": ["Hold barbell with an overhand grip", "Shrug shoulders straight up towards ears", "Lower with control"],
-      "mediaUrl": "/gifs/barbell-shrugs.gif" 
+      "mediaUrl": "/gifs/Barbell-Shrug.gif" 
     },
     { 
       "id": "34", 
@@ -335,7 +326,7 @@
       "secondaryMuscles": ["Traps", "Biceps"], 
       "equipment": "Barbell", 
       "instructions": ["Hold bar with narrow overhand grip", "Pull bar straight up towards chin", "Keep elbows higher than hands"],
-      "mediaUrl": "/gifs/barbell-upright-row.gif" 
+      "mediaUrl": "/gifs/barbell-upright.gif" 
     },
     { 
       "id": "37", 
