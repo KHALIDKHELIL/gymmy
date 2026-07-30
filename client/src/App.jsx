@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useStore } from './store';
-// 1. IMPORT YOUR JSON DATA DIRECTLY
+// Direct static import - zero server needed!
 import exercisesData from './data/exercises.json';
 
 function App() {
-  // 2. USE THE IMPORTED DATA IMMEDIATELY (No loading state needed!)
-  const [exercises, setExercises] = useState(exercisesData);
-  const [loading, setLoading] = useState(false);
+  // Loaded instantly from JSON - NO loading state at all!
+  const [exercises] = useState(exercisesData);
   const [activeTab, setActiveTab] = useState('pool'); // 'pool' | 'session'
   
   // Search & Filter States
@@ -134,93 +133,85 @@ function App() {
         {/* TAB 1: EXERCISE POOL */}
         {activeTab === 'pool' && (
           <div>
-            {loading ? (
-              <div className="flex justify-center items-center py-20 text-gray-500 font-medium">
-                Loading exercises...
+            {/* SEARCH BAR */}
+            <div className="mb-3">
+              <input
+                type="text"
+                placeholder="Search by name or equipment (e.g., Barbell)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              />
+            </div>
+
+            {/* MUSCLE GROUP CHIPS (HORIZONTAL SCROLL) */}
+            <div className="flex gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
+              {muscleGroups.map((muscle) => (
+                <button
+                  key={muscle}
+                  onClick={() => setSelectedMuscle(muscle)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 ${
+                    selectedMuscle === muscle
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'bg-gray-900 text-gray-400 border border-gray-800 hover:text-white'
+                  }`}
+                >
+                  {muscle}
+                </button>
+              ))}
+            </div>
+
+            {/* EXERCISE LIST */}
+            {filteredExercises.length === 0 ? (
+              <div className="text-center py-12 text-gray-500 text-sm">
+                No exercises found matching your search.
               </div>
             ) : (
-              <>
-                {/* SEARCH BAR */}
-                <div className="mb-3">
-                  <input
-                    type="text"
-                    placeholder="Search by name or equipment (e.g., Barbell)..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
-                  />
-                </div>
-
-                {/* MUSCLE GROUP CHIPS (HORIZONTAL SCROLL) */}
-                <div className="flex gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
-                  {muscleGroups.map((muscle) => (
-                    <button
-                      key={muscle}
-                      onClick={() => setSelectedMuscle(muscle)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all shrink-0 ${
-                        selectedMuscle === muscle
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'bg-gray-900 text-gray-400 border border-gray-800 hover:text-white'
-                      }`}
+              <div className="space-y-4">
+                {filteredExercises.map((ex) => {
+                  const added = isAdded(ex.id);
+                  return (
+                    <div 
+                      key={ex.id} 
+                      className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 shadow-sm flex flex-col"
                     >
-                      {muscle}
-                    </button>
-                  ))}
-                </div>
+                      <div className="h-52 bg-gray-950 relative flex items-center justify-center border-b border-gray-800/60">
+                        <img 
+                          src={ex.mediaUrl || `https://placehold.co/400x200/1f2937/a3a3a3?text=${ex.name.split(' ').join('+')}`} 
+                          alt={ex.name} 
+                          className="w-full h-full object-contain"
+                        />
+                        <span className="absolute top-3 right-3 bg-gray-900/90 backdrop-blur-sm text-blue-400 border border-blue-500/30 text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">
+                          {ex.primaryMuscle}
+                        </span>
+                      </div>
 
-                {/* EXERCISE LIST */}
-                {filteredExercises.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500 text-sm">
-                    No exercises found matching your search.
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {filteredExercises.map((ex) => {
-                      const added = isAdded(ex.id);
-                      return (
-                        <div 
-                          key={ex.id} 
-                          className="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800 shadow-sm flex flex-col"
-                        >
-                          <div className="h-52 bg-gray-950 relative flex items-center justify-center border-b border-gray-800/60">
-                            <img 
-                              src={ex.mediaUrl || `https://placehold.co/400x200/1f2937/a3a3a3?text=${ex.name.split(' ').join('+')}`} 
-                              alt={ex.name} 
-                              className="w-full h-full object-contain"
-                            />
-                            <span className="absolute top-3 right-3 bg-gray-900/90 backdrop-blur-sm text-blue-400 border border-blue-500/30 text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">
-                              {ex.primaryMuscle}
-                            </span>
-                          </div>
-
-                          <div className="p-4 flex flex-col gap-3">
-                            <div>
-                              <h2 className="text-lg font-bold text-white leading-snug">
-                                {ex.name}
-                              </h2>
-                              <p className="text-xs text-gray-400 mt-0.5 font-medium">
-                                Equipment: <span className="text-gray-300">{ex.equipment}</span>
-                              </p>
-                            </div>
-
-                            <button 
-                              onClick={() => addToSession(ex)}
-                              disabled={added}
-                              className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 ${
-                                added
-                                  ? 'bg-emerald-950/50 border border-emerald-700/50 text-emerald-400 cursor-default'
-                                  : 'bg-blue-600 active:bg-blue-500 text-white shadow-md shadow-blue-600/20'
-                              }`}
-                            >
-                              {added ? '✓ Added to Session' : '+ Add to Session'}
-                            </button>
-                          </div>
+                      <div className="p-4 flex flex-col gap-3">
+                        <div>
+                          <h2 className="text-lg font-bold text-white leading-snug">
+                            {ex.name}
+                          </h2>
+                          <p className="text-xs text-gray-400 mt-0.5 font-medium">
+                            Equipment: <span className="text-gray-300">{ex.equipment}</span>
+                          </p>
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
+
+                        <button 
+                          onClick={() => addToSession(ex)}
+                          disabled={added}
+                          className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-1.5 ${
+                            added
+                              ? 'bg-emerald-950/50 border border-emerald-700/50 text-emerald-400 cursor-default'
+                              : 'bg-blue-600 active:bg-blue-500 text-white shadow-md shadow-blue-600/20'
+                          }`}
+                        >
+                          {added ? '✓ Added to Session' : '+ Add to Session'}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
         )}
